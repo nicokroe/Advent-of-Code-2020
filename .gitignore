@@ -1,3 +1,6 @@
 *.txt
 __pycache__/
 .vscode/
+*.exe
+*.ps1
+*.zip
