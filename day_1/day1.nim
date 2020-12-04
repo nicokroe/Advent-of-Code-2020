@@ -1,10 +1,12 @@
 import strutils
 import tables
-import math
+from math import prod
 from algorithm import product
+import os
 
 proc get_input(): seq[int] =
-    let f = readFile("input.txt").splitLines()
+    var input_file = currentSourcePath().parentDir() & r"\input.txt"
+    var f = readFile(input_file).splitLines()
     var data: seq[int] = @[]
     for line in f:
         data.add(line.parseInt)
@@ -29,11 +31,11 @@ proc part2(data: seq[int]): int =
 
     for num in data:
         if num in dict:
-            return num * math.prod(dict[num])
+            return num * prod(dict[num])
 
 var data = get_input()
-echo part1(data)
-echo part2(data)
+echo "Part1: ", part1(data)
+echo "Part2: ", part2(data)
 
 
 
