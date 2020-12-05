@@ -1,34 +1,19 @@
 from pathlib import Path
-from typing import Set, Tuple, List
 import timeit
+import re
 
-def get_input() -> list[str]:
-    input_path = Path(__file__).parent / "input.txt"
-    data = []
-    for line in input_path.open():
-        data.append(line.strip())
+def get_input() -> set[int]:
+    input_path = Path(__file__).parent / "bigboy.txt"
+    trans_table = {ord("B"): "1", ord("R"): "1", ord("F"): "0", ord("L"): "0"}
+    data = set(int(line.translate(trans_table), base=2) for line in input_path.open())
     return data
-def compute_seat(seat: str, low: int, high: int) -> int:
-    low = low
-    high = high
-    for char in seat:
-        if char == "F" or char == "L":
-            high = int((high-low)/2)+low
-        else:
-            low = int((high-low)/2)+low+1
-    return low
 
-def solve(data: list[str]) -> Tuple[int, int]:
-    ids: Set[int] = set()
+def solve(data: set[int]) -> tuple[int, int]:
     my_seat = 0
-    for seat in data:
-        row = compute_seat(seat[:7], 0 ,127)
-        column = compute_seat(seat[-3:], 0 ,7)
-        ids.add(row*8+column)
-    min_seat = min(ids)
-    max_seat = max(ids)
-    for elem in range(min_seat, max_seat+1):
-        if elem not in ids:
+    min_seat = int(min(data))
+    max_seat = int(max(data))
+    for elem in range(min_seat, max_seat):
+        if elem not in data:
             my_seat = elem
     return (int(max_seat), my_seat)
 
