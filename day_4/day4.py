@@ -40,8 +40,7 @@ def check_passport(passport: dict[str, str]) -> bool:
                 if not 59 <= int(height) <= 76:
                     return False
         elif k == "hcl":
-            match = re.match(r"^#([0-9a-f]{6})$", v)
-            if not match:
+            if not v.startswith("#") and not len(v) == 7:
                 return False
         elif k == "ecl":
             if not v in {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}:
