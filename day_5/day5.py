@@ -1,5 +1,4 @@
 from pathlib import Path
-import timeit
 
 def get_input() -> set[int]:
     input_path = Path(__file__).parent / "input.txt"
@@ -17,5 +16,6 @@ def solve(data: set[int]) -> tuple[int, int]:
     return (max_seat, my_seat)
 
 data = get_input()
+tmp = list(data)
+print(tmp)
 print(solve(data))
-print(f'Part 1: {timeit.timeit(stmt="solve(data)", number=5, setup="from __main__ import solve, get_input; data=get_input();")*1000/5:.5f} ms')
