@@ -1,6 +1,5 @@
 from pathlib import Path
 import timeit
-import re
 
 def get_input() -> set[int]:
     input_path = Path(__file__).parent / "input.txt"
