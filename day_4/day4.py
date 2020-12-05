@@ -2,6 +2,8 @@ from pathlib import Path
 import re
 import timeit
 
+needed_keys = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
+
 def get_input() -> list[dict[str, str]]:
     input_path = Path(__file__).parent / "input.txt"
     result = []
@@ -30,7 +32,6 @@ def check_passport(passport: dict[str, str]) -> bool:
             match = re.match(r"^(\d+)(cm|in)", v, re.I)            
             if not match:
                 return False
-
             height, unit = match.groups()
             if unit == "cm":
                 if not 150 <= int(height) <= 193:
@@ -64,13 +65,9 @@ def part1(data: list[dict[str, str]]) -> int:
 def part2(data: list[dict[str, str]]) -> int:
     valid = 0
     for passport in data:
-        if len(passport) == 8:
+        if all(k in passport for k in needed_keys):
             if check_passport(passport):
                 valid += 1
-        elif len(passport) == 7:
-            if "cid" not in passport:
-                if check_passport(passport):
-                    valid += 1
     return valid
 
 if __name__ == "__main__":
